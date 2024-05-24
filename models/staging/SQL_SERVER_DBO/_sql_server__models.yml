@@ -1,0 +1,141 @@
+version: 2
+
+models:
+  - name: stg_SQL_SERVER_DBO__addresses
+    columns:
+      - name: address_id
+        data_type: varchar
+      - name: zipcode
+        data_type: number                      
+      - name: country
+        data_type: varchar
+      - name: address
+        data_type: varchar        
+      - name: state
+        data_type: varchar   
+      - name: deleted_at
+        data_type: boolean                 
+      - name: date_load
+        data_type: TIMESTAMP_TZ
+
+  - name: stg_SQL_SERVER_DBO__events
+    columns:
+      - name: event_id
+        data_type: varchar
+      - name: page_url
+        data_type: varchar                      
+      - name: event_type
+        data_type: varchar
+      - name: user_id
+        data_type: varchar        
+      - name: product_id
+        data_type: varchar  
+      - name: session_id
+        data_type: varchar
+      - name: event_created_at
+        data_type: timestamp_ntz
+      - name: order_id
+        data_type: varchar
+      - name: deleted_at
+        data_type: boolean                 
+      - name: date_load
+        data_type: TIMESTAMP_TZ
+
+  - name: stg_SQL_SERVER_DBO__orders
+    columns:
+      - name: order_id
+        data_type: varchar
+      - name: shipping_service
+        data_type: varchar                      
+      - name: shipping_cost
+        data_type: FLOAT
+      - name: address_id
+        data_type: varchar        
+      - name: ORDER_CREATED_AT
+        data_type: TIMESTAMP_TZ  
+      - name: PROMO_ID
+        data_type: varchar
+      - name: ESTIMATED_DELIVERY_AT
+        data_type: timestamp_ntz
+      - name: ORDER_COST
+        data_type: FLOAT
+      - name: ORDER_TOTAL
+        data_type: FLOAT
+      - name: USER_ID
+        data_type: VARCHAR
+      - name: DELIVERED_AT
+        data_type: TIMESTAMP_TZ
+      - name: TRACKING_ID
+        data_type: VARCHAR
+      - name: STATUS
+        data_type: VARCHAR
+      - name: deleted_at
+        data_type: boolean                 
+      - name: date_load
+        data_type: TIMESTAMP_TZ
+
+  - name: stg_SQL_SERVER_DBO__order_items
+    columns:
+      - name: ORDER_ID
+        data_type: varchar
+      - name: PRODUCT_ID
+        data_type: varchar                      
+      - name: QUANTITY
+        data_type: NUMBER
+      - name: deleted_at
+        data_type: boolean                 
+      - name: date_load
+        data_type: TIMESTAMP_TZ
+
+  - name: stg_SQL_SERVER_DBO__products
+    columns:
+      - name: PRODUCT_ID
+        data_type: varchar
+      - name: PRICE
+        data_type: FLOAT                      
+      - name: NAME
+        data_type: VARCHAR
+      - name: INVENTORY
+        data_type: NUMBER
+      - name: deleted_at
+        data_type: boolean                 
+      - name: date_load
+        data_type: TIMESTAMP_TZ
+
+  - name: stg_SQL_SERVER_DBO__promos
+    columns:
+      - name: PROMO_ID
+        data_type: varchar
+      - name: DISCOUNT
+        data_type: NUMBER                      
+      - name: STATUS
+        data_type: VARCHAR
+      - name: deleted_at
+        data_type: boolean                 
+      - name: date_load
+        data_type: TIMESTAMP_TZ
+
+  - name: stg_SQL_SERVER_DBO__users
+    columns:
+      - name: USER_ID
+        data_type: varchar
+      - name: UPDATED_AT
+        data_type: TIMESTAMP_TZ                      
+      - name: ADDRESS_ID
+        data_type: VARCHAR
+      - name: LAST_NAME
+        data_type: VARCHAR
+      - name: USER_CREATED_AT
+        data_type: TIMESTAMP_TZ
+      - name: PHONE_NUMBER
+        data_type: VARCHAR
+      - name: TOTAL_ORDERS
+        data_type: NUMBER
+      - name: FIRST_NAME
+        data_type: VARCHAR
+      - name: EMAIL
+        data_type: VARCHAR
+      - name: deleted_at
+        data_type: boolean                 
+      - name: date_load
+        data_type: TIMESTAMP_TZ

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_google_sheets__budget
+    columns:
+      - name: _ROW
+        data_type: text
+      - name: QUANTITY
+        data_type: number                      
+      - name: MONTH
+        data_type: DATE
+      - name: PRODUCT_ID
+        data_type: varchar                      
+      - name: date_load
+        data_type: TIMESTAMP_TZ
