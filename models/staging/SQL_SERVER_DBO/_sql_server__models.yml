@@ -1,141 +1,280 @@
 version: 2
 
 models:
-  - name: stg_SQL_SERVER_DBO__addresses
+  - name: stg_sql_server_dbo__addresses
+    config:
+      contract:
+        enforced: true
+    description: ""
     columns:
       - name: address_id
         data_type: varchar
+        description: ""
+
       - name: zipcode
-        data_type: number                      
+        data_type: number
+        description: ""
+
       - name: country
         data_type: varchar
-      - name: address
-        data_type: varchar        
-      - name: state
-        data_type: varchar   
-      - name: deleted_at
-        data_type: boolean                 
-      - name: date_load
-        data_type: TIMESTAMP_TZ
+        description: ""
 
-  - name: stg_SQL_SERVER_DBO__events
+      - name: address
+        data_type: varchar
+        description: ""
+
+      - name: state
+        data_type: varchar
+        description: ""
+
+      - name: deleted_at
+        data_type: boolean
+        description: ""
+
+      - name: date_load
+        data_type: timestamp_tz
+        description: ""
+
+  - name: stg_sql_server_dbo__events
+    config:
+      contract:
+        enforced: true
+    description: ""
     columns:
       - name: event_id
         data_type: varchar
+        description: ""
+
       - name: page_url
-        data_type: varchar                      
+        data_type: varchar
+        description: ""
+
       - name: event_type
         data_type: varchar
+        description: ""
+
       - name: user_id
-        data_type: varchar        
+        data_type: varchar
+        description: ""
+
       - name: product_id
-        data_type: varchar  
+        data_type: varchar
+        description: ""
+
       - name: session_id
         data_type: varchar
+        description: ""
+
       - name: event_created_at
         data_type: timestamp_ntz
+        description: ""
+
       - name: order_id
         data_type: varchar
-      - name: deleted_at
-        data_type: boolean                 
-      - name: date_load
-        data_type: TIMESTAMP_TZ
+        description: ""
 
-  - name: stg_SQL_SERVER_DBO__orders
+      - name: deleted_at
+        data_type: boolean
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_tz
+        description: ""
+
+  - name: stg_sql_server_dbo__order_items
+    config:
+      contract:
+        enforced: true
+    description: ""
     columns:
       - name: order_id
         data_type: varchar
+        description: ""
+
+      - name: product_id
+        data_type: varchar
+        description: ""
+
+      - name: quantity
+        data_type: number
+        description: ""
+
+      - name: deleted_at
+        data_type: boolean
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_tz
+        description: ""
+
+  - name: stg_sql_server_dbo__orders
+    config:
+      contract:
+        enforced: true
+    description: ""
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: ""
+
       - name: shipping_service
-        data_type: varchar                      
+        data_type: varchar
+        description: ""
+
       - name: shipping_cost
-        data_type: FLOAT
+        data_type: float
+        description: ""
+
       - name: address_id
-        data_type: varchar        
-      - name: ORDER_CREATED_AT
-        data_type: TIMESTAMP_TZ  
-      - name: PROMO_ID
         data_type: varchar
-      - name: ESTIMATED_DELIVERY_AT
-        data_type: timestamp_ntz
-      - name: ORDER_COST
-        data_type: FLOAT
-      - name: ORDER_TOTAL
-        data_type: FLOAT
-      - name: USER_ID
-        data_type: VARCHAR
-      - name: DELIVERED_AT
-        data_type: TIMESTAMP_TZ
-      - name: TRACKING_ID
-        data_type: VARCHAR
-      - name: STATUS
-        data_type: VARCHAR
-      - name: deleted_at
-        data_type: boolean                 
-      - name: date_load
-        data_type: TIMESTAMP_TZ
+        description: ""
 
-  - name: stg_SQL_SERVER_DBO__order_items
-    columns:
-      - name: ORDER_ID
-        data_type: varchar
-      - name: PRODUCT_ID
-        data_type: varchar                      
-      - name: QUANTITY
-        data_type: NUMBER
-      - name: deleted_at
-        data_type: boolean                 
-      - name: date_load
-        data_type: TIMESTAMP_TZ
+      - name: order_created_at
+        data_type: timestamp_tz
+        description: ""
 
-  - name: stg_SQL_SERVER_DBO__products
-    columns:
-      - name: PRODUCT_ID
+      - name: promo_id
         data_type: varchar
-      - name: PRICE
-        data_type: FLOAT                      
-      - name: NAME
-        data_type: VARCHAR
-      - name: INVENTORY
-        data_type: NUMBER
-      - name: deleted_at
-        data_type: boolean                 
-      - name: date_load
-        data_type: TIMESTAMP_TZ
+        description: ""
 
-  - name: stg_SQL_SERVER_DBO__promos
-    columns:
-      - name: PROMO_ID
-        data_type: varchar
-      - name: DISCOUNT
-        data_type: NUMBER                      
-      - name: STATUS
-        data_type: VARCHAR
-      - name: deleted_at
-        data_type: boolean                 
-      - name: date_load
-        data_type: TIMESTAMP_TZ
+      - name: estimated_delivery_at
+        data_type: timestamp_tz
+        description: ""
 
-  - name: stg_SQL_SERVER_DBO__users
-    columns:
-      - name: USER_ID
+      - name: order_cost
+        data_type: float
+        description: ""
+
+      - name: user_id
         data_type: varchar
-      - name: UPDATED_AT
-        data_type: TIMESTAMP_TZ                      
-      - name: ADDRESS_ID
-        data_type: VARCHAR
-      - name: LAST_NAME
-        data_type: VARCHAR
-      - name: USER_CREATED_AT
-        data_type: TIMESTAMP_TZ
-      - name: PHONE_NUMBER
-        data_type: VARCHAR
-      - name: TOTAL_ORDERS
-        data_type: NUMBER
-      - name: FIRST_NAME
-        data_type: VARCHAR
-      - name: EMAIL
-        data_type: VARCHAR
+        description: ""
+
+      - name: order_total
+        data_type: float
+        description: ""
+
+      - name: delivered_at
+        data_type: timestamp_tz
+        description: ""
+
+      - name: tracking_id
+        data_type: varchar
+        description: ""
+
+      - name: status
+        data_type: varchar
+        description: ""
+
       - name: deleted_at
-        data_type: boolean                 
-      - name: date_load
-        data_type: TIMESTAMP_TZ
+        data_type: boolean
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_tz
+        description: ""
+
+  - name: stg_sql_server_dbo__products
+    config:
+      contract:
+        enforced: true
+    description: ""
+    columns:
+      - name: product_id
+        data_type: varchar
+        description: ""
+
+      - name: price
+        data_type: float
+        description: ""
+
+      - name: name
+        data_type: varchar
+        description: ""
+
+      - name: inventory
+        data_type: number
+        description: ""
+
+      - name: deleted_at
+        data_type: boolean
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_tz
+        description: ""
+
+  - name: stg_sql_server_dbo__promos
+    config:
+      contract:
+        enforced: true
+    description: ""
+    columns:
+      - name: promo_id
+        data_type: varchar
+        description: ""
+
+      - name: discount
+        data_type: number
+        description: ""
+
+      - name: status
+        data_type: varchar
+        description: ""
+
+      - name: deleted_at
+        data_type: boolean
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_tz
+        description: ""
+
+  - name: stg_sql_server_dbo__users
+    config:
+      contract:
+        enforced: true
+    description: ""
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: ""
+
+      - name: updated_at
+        data_type: timestamp_tz
+        description: ""
+
+      - name: address_id
+        data_type: varchar
+        description: ""
+
+      - name: last_name
+        data_type: varchar
+        description: ""
+
+      - name: user_created_at
+        data_type: timestamp_tz
+        description: ""
+
+      - name: phone_number
+        data_type: varchar
+        description: ""
+
+      - name: total_orders
+        data_type: number
+        description: ""
+
+      - name: first_name
+        data_type: varchar
+        description: ""
+
+      - name: email
+        data_type: varchar
+        description: ""
+
+      - name: deleted_at
+        data_type: boolean
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_tz
+        description: ""
