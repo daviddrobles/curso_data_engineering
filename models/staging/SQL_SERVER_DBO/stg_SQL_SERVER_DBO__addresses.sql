@@ -20,8 +20,8 @@ renamed as (
         country,
         address,
         state,
-        _fivetran_deleted AS deleted_at,
-        _fivetran_synced AS date_load
+        _fivetran_deleted,
+        _fivetran_synced
 
     from source
 

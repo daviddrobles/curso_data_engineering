@@ -1,39 +1,43 @@
 version: 2
 
 models:
-  - name: stg_sql_server_dbo__addresses
+  - name: stg_sql_server_dbo__addresses                         #Terminada
     config:
       contract:
         enforced: true
-    description: ""
     columns:
       - name: address_id
-        data_type: varchar
-        description: ""
+        tests:
+              - unique
+              - not_null 
+        data_type: varchar(256)
+        description: "Identificador unico de la direccion"
 
       - name: zipcode
-        data_type: number
-        description: ""
+        tests:
+              - positive_values
+        data_type: number(38,0)
+        description: "Codigo postal"
 
       - name: country
-        data_type: varchar
-        description: ""
+        data_type: varchar(256)
+        description: "Pais de la direccion"
 
       - name: address
-        data_type: varchar
-        description: ""
+        data_type: varchar(256)
+        description: "Direccion detallada"
 
       - name: state
-        data_type: varchar
-        description: ""
+        data_type: varchar(256)
+        description: "Estado donde se ubica la direccion"
 
-      - name: deleted_at
+      - name: _fivetran_deleted
         data_type: boolean
-        description: ""
+        description: "Indicador de borrado de los datos"
 
-      - name: date_load
-        data_type: timestamp_tz
-        description: ""
+      - name: _fivetran_synced
+        data_type: timestamp_tz(9)
+        description: "Fecha de cargado de los datos"
 
   - name: stg_sql_server_dbo__events
     config:
@@ -42,6 +46,9 @@ models:
     description: ""
     columns:
       - name: event_id
+        tests:
+              - unique
+              - not_null
         data_type: varchar
         description: ""
 
@@ -54,14 +61,28 @@ models:
         description: ""
 
       - name: user_id
+        tests:
+              - unique
+              - not_null
+              - relationships:
+                  to: source('sql_server_dbo','users')
+                  field: user_id
         data_type: varchar
         description: ""
 
       - name: product_id
+        tests:
+              - unique
+              - relationships:
+                  to: source('sql_server_dbo','products')
+                  field: product_id
         data_type: varchar
         description: ""
 
       - name: session_id
+        tests:
+              - unique
+              - not_null
         data_type: varchar
         description: ""
 
@@ -70,14 +91,19 @@ models:
         description: ""
 
       - name: order_id
+        tests:
+              - unique
+              - relationships:
+                  to: source('sql_server_dbo','products')
+                  field: product_id
         data_type: varchar
         description: ""
 
-      - name: deleted_at
+      - name: _fivetran_deleted
         data_type: boolean
         description: ""
 
-      - name: created_at
+      - name: _fivetran_synced
         data_type: timestamp_tz
         description: ""
 
@@ -88,22 +114,36 @@ models:
     description: ""
     columns:
       - name: order_id
+        tests:
+              - unique
+              - not_null
+              - relationships:
+                  to: source('sql_server_dbo','orders')
+                  field: order_id
         data_type: varchar
         description: ""
 
       - name: product_id
+        tests:
+              - unique
+              - not_null
+              - relationships:
+                  to: source('sql_server_dbo','products')
+                  field: product_id
         data_type: varchar
         description: ""
 
       - name: quantity
+        tests:
+              - not_null
         data_type: number
         description: ""
 
-      - name: deleted_at
+      - name: _fivetran_deleted
         data_type: boolean
         description: ""
 
-      - name: created_at
+      - name: _fivetran_synced
         data_type: timestamp_tz
         description: ""
 
@@ -114,6 +154,9 @@ models:
     description: ""
     columns:
       - name: order_id
+        tests:
+              - unique
+              - not_null
         data_type: varchar
         description: ""
 
@@ -146,6 +189,9 @@ models:
         description: ""
 
       - name: user_id
+        tests:
+              - unique
+              - not_null
         data_type: varchar
         description: ""
 
@@ -165,69 +211,79 @@ models:
         data_type: varchar
         description: ""
 
-      - name: deleted_at
+      - name: _fivetran_deleted
         data_type: boolean
         description: ""
 
-      - name: created_at
+      - name: _fivetran_synced
         data_type: timestamp_tz
         description: ""
 
-  - name: stg_sql_server_dbo__products
+  - name: stg_sql_server_dbo__products          #TERMINADA
     config:
       contract:
         enforced: true
     description: ""
     columns:
       - name: product_id
-        data_type: varchar
-        description: ""
+        tests:
+              - unique
+              - not_null
+        data_type: varchar(256)
+        description: "Identificador unico del producto"
 
       - name: price
         data_type: float
-        description: ""
+        description: "Precio del producto"
 
       - name: name
-        data_type: varchar
-        description: ""
+        data_type: varchar(256)
+        description: "Nombre del producto"
 
       - name: inventory
-        data_type: number
-        description: ""
+        data_type: number(38,0)
+        description: "Cantidad de stock del producto"
 
-      - name: deleted_at
+      - name: _fivetran_deleted
         data_type: boolean
-        description: ""
+        description: "Indicador de borrado de datos"
 
-      - name: created_at
-        data_type: timestamp_tz
-        description: ""
+      - name: _fivetran_synced
+        data_type: timestamp_tz(9)
+        description: "Fecha de insercion de los datos"
 
-  - name: stg_sql_server_dbo__promos
+  - name: stg_sql_server_dbo__promos                    #TERMINADA
     config:
       contract:
         enforced: true
     description: ""
     columns:
       - name: promo_id
-        data_type: varchar
-        description: ""
+        tests:
+              - unique
+              - not_null
+        data_type: varchar(256)
+        description: "Identificador unico de la promocion"
+
+      - name: promo_name
+        data_type: varchar(256)
+        description: "Nombre de la promocion"
 
       - name: discount
-        data_type: number
-        description: ""
+        data_type: number(38,0)
+        description: "Porcentaje de descuento"
 
       - name: status
-        data_type: varchar
-        description: ""
+        data_type: varchar(256)
+        description: "Estado de la promocion"
 
-      - name: deleted_at
+      - name: _fivetran_deleted
         data_type: boolean
-        description: ""
+        description: "Indicador de borrado de datos"
 
-      - name: created_at
-        data_type: timestamp_tz
-        description: ""
+      - name: _fivetran_synced
+        data_type: timestamp_tz(9)
+        description: "Fecha de insercion de los datos"
 
   - name: stg_sql_server_dbo__users
     config:
@@ -236,45 +292,54 @@ models:
     description: ""
     columns:
       - name: user_id
-        data_type: varchar
-        description: ""
+        tests:
+              - unique
+              - not_null
+        data_type: varchar(256)
+        description: "Identificador unico de usuario"
 
       - name: updated_at
-        data_type: timestamp_tz
+        data_type: timestamp_tz(9)
         description: ""
 
       - name: address_id
-        data_type: varchar
-        description: ""
+        tests:
+              - unique
+              - not_null
+              - relationships:
+                  to: source('sql_server_dbo','adresses')
+                  field: address_id
+        data_type: varchar(256)
+        description: "Identificador unico de la direccion"
 
       - name: last_name
-        data_type: varchar
-        description: ""
+        data_type: varchar(256)
+        description: "Apellido del usuario"
 
-      - name: user_created_at
-        data_type: timestamp_tz
-        description: ""
+      - name: created_at
+        data_type: timestamp_tz(9)
+        description: "Fecha de creacion de usuario"
 
       - name: phone_number
-        data_type: varchar
-        description: ""
+        data_type: varchar(256)
+        description: "Numero de telefono del usuario"
 
       - name: total_orders
-        data_type: number
+        data_type: number(38,0)
         description: ""
 
       - name: first_name
-        data_type: varchar
-        description: ""
+        data_type: varchar(256)
+        description: "Nombre del usuario"
 
       - name: email
-        data_type: varchar
-        description: ""
+        data_type: varchar(256)
+        description: "Email del usuario"
 
-      - name: deleted_at
+      - name: _fivetran_deleted
         data_type: boolean
-        description: ""
+        description: "Indicador de borrado de datos"
 
-      - name: created_at
-        data_type: timestamp_tz
-        description: ""
+      - name: _fivetran_synced
+        data_type: timestamp_tz(9)
+        description: "Fecha de insercion de los datos"
