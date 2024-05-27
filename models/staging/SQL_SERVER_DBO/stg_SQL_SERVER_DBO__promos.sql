@@ -15,11 +15,12 @@ source as (
 renamed as (
 
     select
-        promo_id,
+        distinct md5(promo_name) as promo_id
+        promo_name,
         discount,
         status,
-        _fivetran_deleted AS deleted_at,
-        _fivetran_synced AS created_at
+        _fivetran_deleted,
+        _fivetran_synced
 
     from source
 

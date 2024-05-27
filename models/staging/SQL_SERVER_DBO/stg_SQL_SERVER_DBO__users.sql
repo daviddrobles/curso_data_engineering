@@ -19,13 +19,13 @@ renamed as (
         updated_at,
         address_id,
         last_name,
-        created_at AS user_created_at,
+        created_at,
         phone_number,
         total_orders,
         first_name,
         email,
-        _fivetran_deleted AS deleted_at,
-        _fivetran_synced AS created_at
+        _fivetran_deleted,
+        _fivetran_synced
 
     from source
 

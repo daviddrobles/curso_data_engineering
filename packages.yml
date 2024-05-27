@@ -1,3 +1,12 @@
 packages:
-  - package: dbt-labs/codegen
+  - package: dbt-labs/codegen #https://hub.getdbt.com/dbt-labs/codegen/latest/
     version: 0.12.1
+
+  - package: dbt-labs/dbt_utils #https://hub.getdbt.com/dbt-labs/dbt_utils/latest/
+    version: 1.1.1
+
+  - package: dbt-labs/audit_helper #https://hub.getdbt.com/dbt-labs/audit_helper/latest/
+    version: 0.11.0
+
+  - package: dbt-labs/dbt_project_evaluator #https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/
+    version: 0.11.0

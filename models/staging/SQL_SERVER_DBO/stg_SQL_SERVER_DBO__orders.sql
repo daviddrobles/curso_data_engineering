@@ -19,7 +19,7 @@ renamed as (
         shipping_service,
         shipping_cost,
         address_id,
-        created_at AS order_created_at,
+        created_at,
         promo_id,
         estimated_delivery_at,
         order_cost,
@@ -28,8 +28,8 @@ renamed as (
         delivered_at,
         tracking_id,
         status,
-        _fivetran_deleted AS deleted_at,
-        _fivetran_synced AS created_at
+        _fivetran_deleted,
+        _fivetran_synced
 
     from source
 

@@ -19,8 +19,8 @@ renamed as (
         price,
         name,
         inventory,
-        _fivetran_deleted AS deleted_at,
-        _fivetran_synced AS created_at
+        _fivetran_deleted,
+        _fivetran_synced
 
     from source
 
