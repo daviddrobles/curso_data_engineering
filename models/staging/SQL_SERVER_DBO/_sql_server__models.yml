@@ -14,8 +14,6 @@ models:
         description: "Identificador unico de la direccion"
 
       - name: zipcode
-        tests:
-              - positive_values
         data_type: number(38,0)
         description: "Codigo postal"
 
@@ -31,15 +29,15 @@ models:
         data_type: varchar(256)
         description: "Estado donde se ubica la direccion"
 
-      - name: _fivetran_deleted
+      - name: _fivetran_deleted_utc
         data_type: boolean
         description: "Indicador de borrado de los datos"
 
-      - name: _fivetran_synced
+      - name: _fivetran_synced_utc
         data_type: timestamp_tz(9)
         description: "Fecha de cargado de los datos"
 
-  - name: stg_sql_server_dbo__events
+  - name: stg_sql_server_dbo__events                                                 #Terminada
     config:
       contract:
         enforced: true
@@ -56,54 +54,57 @@ models:
         data_type: varchar(1024)
         description: "Direccion de la pagina"
 
-      - name: event_type
+      - name: event_type_id
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('sql_server_dbo__events_types')
+                  field: event_type_id
         data_type: varchar(100)
-        description: "Tipo de evento"
+        description: "Identificador unico de cada tipo de evento"
 
       - name: user_id
         tests:
-              - unique
               - not_null
               - relationships:
-                  to: source('sql_server_dbo','users')
+                  to: ref('sql_server_dbo__users')
                   field: user_id
         data_type: varchar(1024)
         description: "Identificador unico de usuario"
 
       - name: product_id
         tests:
-              - unique
+              - not null
               - relationships:
-                  to: source('sql_server_dbo','products')
+                  to: ref('sql_server_dbo__products')
                   field: product_id
         data_type: varchar(1024)
         description: "Identificado unico de producto"
 
       - name: session_id
         tests:
-              - unique
               - not_null
         data_type: varchar(1024)
         description: "Identificador unico de la sesion"
 
-      - name: created_at
+      - name: created_at_utc
         data_type: timestamp_ntz(9)
         description: "Fecha cuando se ha creado el evento"
 
       - name: order_id
         tests:
-              - unique
+              - not null
               - relationships:
-                  to: source('sql_server_dbo','products')
-                  field: product_id
+                  to: ref('sql_server_dbo__orders')
+                  field: order_id
         data_type: varchar(1024)
         description: "Identificador unico de order"
 
-      - name: _fivetran_deleted
+      - name: _fivetran_deleted_utc
         data_type: boolean
         description: "Indicador de borrado de los datos"
 
-      - name: _fivetran_synced
+      - name: _fivetran_synced_utc
         data_type: timestamp_tz
         description: "Fecha de insercion de los datos"
 
@@ -111,39 +112,37 @@ models:
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla que relaciona cada order con los productos que pide"
     columns:
       - name: order_id
         tests:
-              - unique
-              - not_null
+              - not null
               - relationships:
-                  to: source('sql_server_dbo','orders')
+                  to: ref('sql_server_dbo__orders')
                   field: order_id
         data_type: varchar
-        description: ""
+        description: "Identificador unico de cada order"
 
       - name: product_id
         tests:
-              - unique
               - not_null
               - relationships:
-                  to: source('sql_server_dbo','products')
+                  to: ref('sql_server_dbo__products')
                   field: product_id
         data_type: varchar
-        description: ""
+        description: "Identificador unico de cada producto"
 
-      - name: quantity
+      - name: quantity_of_products
         tests:
               - not_null
         data_type: number
-        description: ""
+        description: "Cantidad de productos pedidos en cada order"
 
-      - name: _fivetran_deleted
+      - name: _fivetran_deleted_utc
         data_type: boolean
         description: "Indicador de borrado de los datos"
 
-      - name: _fivetran_synced
+      - name: _fivetran_synced_utc
         data_type: timestamp_tz
         description: "Fecha de insercion de los datos"
 
@@ -158,64 +157,82 @@ models:
               - unique
               - not_null
         data_type: varchar
-        description: ""
+        description: "Identificador unico de cada order"
 
-      - name: shipping_service
+      - name: shipping_service_id
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('sql_server_dbo__shipping_service')
+                  field: shipping_service_id
         data_type: varchar
-        description: ""
+        description: "Identificador unico de cada shipping service"
 
-      - name: shipping_cost
+      - name: shipping_cost_dollar
         data_type: float
-        description: ""
+        description: "Coste de envio"
 
       - name: address_id
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('sql_server_dbo__addresses')
+                  field: address_id
         data_type: varchar
-        description: ""
+        description: "Identificador unico de cada direccion"
 
-      - name: order_created_at
+      - name: created_at_utc
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de creacion del pedido (order)"
 
       - name: promo_id
+        tests:
+              - not_null
         data_type: varchar
-        description: ""
+        description: "Identificador unico de cada promocion"
 
-      - name: estimated_delivery_at
+      - name: estimated_delivery_at_utc
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de entrega estimada"
 
-      - name: order_cost
+      - name: order_cost_dollar
         data_type: float
-        description: ""
+        description: "Coste del pedido"
 
       - name: user_id
         tests:
-              - unique
               - not_null
+              - relationships:
+                  to: ref('sql_server_dbo__users')
+                  field: user_id
         data_type: varchar
-        description: ""
+        description: "Identificador unico de cada usuario"
 
-      - name: order_total
+      - name: order_total_dollar
         data_type: float
-        description: ""
+        description: "Coste final del pedido con su descuento"
 
-      - name: delivered_at
+      - name: delivered_at_utc
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de entrega del pedido"
 
       - name: tracking_id
         data_type: varchar
-        description: ""
+        description: "Identificador unico del rastreo del pedido"
 
-      - name: status
+      - name: order_status_id
+        tests:
+              - relationships:
+                  to: ref('sql_server_dbo__orders_status')
+                  field: order_status_id
         data_type: varchar
-        description: ""
+        description: "Identificador unico del estado del pedido"
 
-      - name: _fivetran_deleted
+      - name: _fivetran_deleted_utc
         data_type: boolean
         description: "Indicador de borrado de los datos"
 
-      - name: _fivetran_synced
+      - name: _fivetran_synced_utc
         data_type: timestamp_tz
         description: "Fecha de insercion de los datos"
 
@@ -232,7 +249,7 @@ models:
         data_type: varchar(256)
         description: "Identificador unico del producto"
 
-      - name: price
+      - name: price_dollar
         data_type: float
         description: "Precio del producto"
 
@@ -244,11 +261,11 @@ models:
         data_type: number(38,0)
         description: "Cantidad de stock del producto"
 
-      - name: _fivetran_deleted
+      - name: _fivetran_deleted_utc
         data_type: boolean
         description: "Indicador de borrado de datos"
 
-      - name: _fivetran_synced
+      - name: _fivetran_synced_utc
         data_type: timestamp_tz(9)
         description: "Fecha de insercion de los datos"
 
@@ -269,13 +286,18 @@ models:
         data_type: varchar(256)
         description: "Nombre de la promocion"
 
-      - name: discount_euros
+      - name: discount_dollar
         data_type: number(38,0)
-        description: "Porcentaje de descuento"
+        description: "Descuento fijo de dolares"
 
-      - name: active
+      - name: promo_status_id
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('sql_server_dbo__promos_status')
+                  field: promo_status_id
         data_type: varchar(256)
-        description: "Estado de la promocion"
+        description: "Identificador unico del estado de la promocion"
 
       - name: _fivetran_deleted_utc
         data_type: boolean
@@ -298,49 +320,53 @@ models:
         data_type: varchar(256)
         description: "Identificador unico de usuario"
 
-      - name: updated_at
-        data_type: timestamp_tz(9)
-        description: ""
-
       - name: address_id
         tests:
               - unique
               - not_null
               - relationships:
-                  to: source('sql_server_dbo','adresses')
+                  to: ref('sql_server_dbo__adresses')
                   field: address_id
         data_type: varchar(256)
         description: "Identificador unico de la direccion"
-
-      - name: last_name
-        data_type: varchar(256)
-        description: "Apellido del usuario"
-
-      - name: created_at
-        data_type: timestamp_tz(9)
-        description: "Fecha de creacion de usuario"
-
-      - name: phone_number
-        data_type: varchar(256)
-        description: "Numero de telefono del usuario"
-
-      - name: total_orders
-        data_type: number(38,0)
-        description: ""
 
       - name: first_name
         data_type: varchar(256)
         description: "Nombre del usuario"
 
+      - name: last_name
+        data_type: varchar(256)
+        description: "Apellido del usuario"
+
+      - name: phone_number
+        data_type: varchar(256)
+        description: "Numero de telefono del usuario"
+
       - name: email
         data_type: varchar(256)
         description: "Email del usuario"
 
-      - name: _fivetran_deleted
+      - name: is_valid_email_address
+        data_type: boolean
+        description: "Verificador de email validos"
+
+      - name: updated_at_utc
+        data_type: timestamp_tz(9)
+        description: "Fecha de actualizacion del usuario"
+
+      - name: created_at_utc
+        data_type: timestamp_tz(9)
+        description: "Fecha de creacion de usuario"
+
+      - name: total_orders
+        data_type: number(38,0)
+        description: "Numero total de orders"
+
+      - name: _fivetran_deleted_utc
         data_type: boolean
         description: "Indicador de borrado de datos"
 
-      - name: _fivetran_synced
+      - name: _fivetran_synced_utc
         data_type: timestamp_tz(9)
         description: "Fecha de insercion de los datos"
 
@@ -361,13 +387,13 @@ models:
         data_type: varchar(256)
         description: "Nombre del servicio de envio"
 
-  - name: stg_SQL_SERVER_DBO__status                    #TERMINADA
+  - name: stg_SQL_SERVER_DBO__orders_status                    #TERMINADA
     config:
       contract:
         enforced: true
     description: ""
     columns:
-      - name: status_id
+      - name: order_status_id
         tests:
               - unique
               - not_null
@@ -377,3 +403,36 @@ models:
       - name: status
         data_type: varchar(256)
         description: "Estado"
+
+  - name: stg_SQL_SERVER_DBO__promos_status                    #TERMINADA
+    config:
+      contract:
+        enforced: true
+    description: ""
+    columns:
+      - name: promo_status_id
+        tests:
+              - not_null
+        data_type: varchar(256)
+        description: "Identificador unico del estado"
+
+      - name: promo_status
+        data_type: varchar(256)
+        description: "Estado"
+
+  - name: stg_SQL_SERVER_DBO__events_types                   #TERMINADA
+    config:
+      contract:
+        enforced: true
+    description: ""
+    columns:
+      - name: event_type_id
+        tests:
+              - unique
+              - not_null
+        data_type: varchar(256)
+        description: "Identificador unico del tipo de evento"
+
+      - name: event_type_name
+        data_type: varchar(256)
+        description: "Nombre del tipo de evento"

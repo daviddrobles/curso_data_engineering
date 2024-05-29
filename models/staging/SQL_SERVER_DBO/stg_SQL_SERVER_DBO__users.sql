@@ -16,16 +16,17 @@ renamed as (
 
     select
         user_id,
-        updated_at,
         address_id,
-        last_name,
-        created_at,
-        phone_number,
-        total_orders,
         first_name,
+        last_name,
+        phone_number,
         email,
-        _fivetran_deleted,
-        _fivetran_synced
+        coalesce (regexp_like(email, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')= true,false) as is_valid_email_address,
+        updated_at as updated_at_utc,
+        created_at as created_at_utc,
+        total_orders,
+        _fivetran_deleted as _fivetran_deleted_utc,
+        _fivetran_synced as _fivetran_synced_utc
 
     from source
 

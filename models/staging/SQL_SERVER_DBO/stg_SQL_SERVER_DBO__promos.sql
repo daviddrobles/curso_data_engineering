@@ -17,8 +17,8 @@ renamed as (
     select
         distinct md5(promo_id) as promo_id,
         promo_id as promo_name,
-        discount as discount_euros,
-        IFF(status = 'active', '1', '0') as promo_status,
+        discount as discount_dollar,
+        IFF(status = 'active', '1', '0') as promo_status_id,
         _fivetran_deleted as _fivetran_deleted_utc,
         _fivetran_synced as _fivetran_synced_utc
 

@@ -2,24 +2,35 @@ version: 2
 
 models:
   - name: stg_google_sheets__budget
-    description: ""
+    description: "Tabla de ventas esperadas por producto y mes"
     columns:
-      - name: _row
+      - name: budget_id
+        tests:
+          - not_null
         data_type: number
-        description: ""
+        description: "Identificador unico de cada budget"
 
-      - name: quantity
+      - name: quantity_sold_expected
+        tests:
+              - not_null
         data_type: number
-        description: ""
+        description: "Cantidad esperada de venta"
 
       - name: month
+        tests:
+              - not_null
         data_type: date
-        description: ""
+        description: "Mes"
 
       - name: product_id
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('stg_sql_server_dbo__products')
+                  field: product_id
         data_type: varchar
-        description: ""
+        description: "Identificador unico del producto (se repetira cada mes)"
 
-      - name: date_load
+      - name: _fivetran_synced_utc
         data_type: timestamp_tz
-        description: ""
+        description: "Fecha de ingesta de datos"

@@ -15,11 +15,12 @@ source as (
 renamed as (
 
     select
-        IFF(status = 'active', 1, 0) as promos_status_id,
+        IFF(status = 'active', 1, 0)::varchar(256) as promo_status_id,
         status as promo_status
 
     from source
     group by promo_status
+    
 )
 
 select * from renamed
