@@ -20,8 +20,8 @@ renamed as (
         country,
         address,
         state,
-        _fivetran_deleted,
-        _fivetran_synced
+        _fivetran_deleted as _fivetran_deleted_utc,
+        _fivetran_synced as _fivetran_synced_utc
 
     from source
 

@@ -15,11 +15,11 @@ source as (
 renamed as (
 
     select
-        _row,
-        quantity,
+        _row as budget_id,
+        quantity as quantity_sold_expected,
         month,
         product_id,
-        _fivetran_synced AS date_load
+        _fivetran_synced AS _fivetran_synced_utc
 
     from source
 
