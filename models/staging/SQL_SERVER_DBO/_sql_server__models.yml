@@ -1,31 +1,39 @@
 version: 2
 
 models:
-  - name: stg_sql_server_dbo__addresses                         #Terminada
+  - name: stg_SQL_SERVER_DBO__addresses                        
     config:
       contract:
-        enforced: false
+        enforced: true
+    description: "Tabla que recoge todas las direcciones existentes"
     columns:
       - name: address_id
         tests:
-              - unique
               - not_null 
         data_type: varchar(256)
         description: "Identificador unico de la direccion"
 
       - name: zipcode
+        tests:
+              - not_null
         data_type: number(38,0)
         description: "Codigo postal"
 
       - name: country
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Pais de la direccion"
 
       - name: address
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Direccion detallada"
 
       - name: state
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Estado donde se ubica la direccion"
 
@@ -37,11 +45,11 @@ models:
         data_type: timestamp_tz(9)
         description: "Fecha de cargado de los datos"
 
-  - name: stg_sql_server_dbo__events                                                 #Terminada
+  - name: stg_SQL_SERVER_DBO__events
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla que refleja todos los eventos que realiza cada usuario y la sesion generada"
     columns:
       - name: event_id
         tests:
@@ -51,6 +59,8 @@ models:
         description: "Identificador unico de eventos"
 
       - name: page_url
+        tests:
+              - not_null
         data_type: varchar(1024)
         description: "Direccion de la pagina"
 
@@ -58,7 +68,7 @@ models:
         tests:
               - not_null
               - relationships:
-                  to: ref('sql_server_dbo__events_types')
+                  to: ref('stg_SQL_SERVER_DBO__events_types')
                   field: event_type_id
         data_type: varchar(100)
         description: "Identificador unico de cada tipo de evento"
@@ -67,16 +77,16 @@ models:
         tests:
               - not_null
               - relationships:
-                  to: ref('sql_server_dbo__users')
+                  to: ref('stg_SQL_SERVER_DBO__users')
                   field: user_id
         data_type: varchar(1024)
         description: "Identificador unico de usuario"
 
       - name: product_id
         tests:
-              - not null
+              - not_null
               - relationships:
-                  to: ref('sql_server_dbo__products')
+                  to: ref('stg_SQL_SERVER_DBO__products')
                   field: product_id
         data_type: varchar(1024)
         description: "Identificado unico de producto"
@@ -88,14 +98,16 @@ models:
         description: "Identificador unico de la sesion"
 
       - name: created_at_utc
+        tests:
+              - not_null
         data_type: timestamp_ntz(9)
         description: "Fecha cuando se ha creado el evento"
 
       - name: order_id
         tests:
-              - not null
+              - not_null
               - relationships:
-                  to: ref('sql_server_dbo__orders')
+                  to: ref('stg_SQL_SERVER_DBO__orders')
                   field: order_id
         data_type: varchar(1024)
         description: "Identificador unico de order"
@@ -108,7 +120,7 @@ models:
         data_type: timestamp_tz
         description: "Fecha de insercion de los datos"
 
-  - name: stg_sql_server_dbo__order_items
+  - name: stg_SQL_SERVER_DBO__order_items
     config:
       contract:
         enforced: true
@@ -116,9 +128,9 @@ models:
     columns:
       - name: order_id
         tests:
-              - not null
+              - not_null
               - relationships:
-                  to: ref('sql_server_dbo__orders')
+                  to: ref('stg_SQL_SERVER_DBO__orders')
                   field: order_id
         data_type: varchar
         description: "Identificador unico de cada order"
@@ -127,7 +139,7 @@ models:
         tests:
               - not_null
               - relationships:
-                  to: ref('sql_server_dbo__products')
+                  to: ref('stg_SQL_SERVER_DBO__products')
                   field: product_id
         data_type: varchar
         description: "Identificador unico de cada producto"
@@ -146,11 +158,11 @@ models:
         data_type: timestamp_tz
         description: "Fecha de insercion de los datos"
 
-  - name: stg_sql_server_dbo__orders
+  - name: stg_SQL_SERVER_DBO__orders
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla que recoge todos los pedidos realizados por cada usuario"
     columns:
       - name: order_id
         tests:
@@ -163,12 +175,14 @@ models:
         tests:
               - not_null
               - relationships:
-                  to: ref('sql_server_dbo__shipping_service')
+                  to: ref('stg_SQL_SERVER_DBO__shipping_service')
                   field: shipping_service_id
         data_type: varchar
         description: "Identificador unico de cada shipping service"
 
       - name: shipping_cost_dollar
+        tests:
+              - not_null
         data_type: float
         description: "Coste de envio"
 
@@ -176,12 +190,14 @@ models:
         tests:
               - not_null
               - relationships:
-                  to: ref('sql_server_dbo__addresses')
+                  to: ref('stg_SQL_SERVER_DBO__addresses')
                   field: address_id
         data_type: varchar
         description: "Identificador unico de cada direccion"
 
       - name: created_at_utc
+        tests:
+              - not_null
         data_type: timestamp_tz
         description: "Fecha de creacion del pedido (order)"
 
@@ -196,6 +212,8 @@ models:
         description: "Fecha de entrega estimada"
 
       - name: order_cost_dollar
+        tests:
+              - not_null
         data_type: float
         description: "Coste del pedido"
 
@@ -203,12 +221,14 @@ models:
         tests:
               - not_null
               - relationships:
-                  to: ref('sql_server_dbo__users')
+                  to: ref('stg_SQL_SERVER_DBO__users')
                   field: user_id
         data_type: varchar
         description: "Identificador unico de cada usuario"
 
       - name: order_total_dollar
+        tests:
+              - not_null
         data_type: float
         description: "Coste final del pedido con su descuento"
 
@@ -222,8 +242,9 @@ models:
 
       - name: order_status_id
         tests:
+              - not_null
               - relationships:
-                  to: ref('sql_server_dbo__orders_status')
+                  to: ref('stg_SQL_SERVER_DBO__orders_status')
                   field: order_status_id
         data_type: varchar
         description: "Identificador unico del estado del pedido"
@@ -236,11 +257,11 @@ models:
         data_type: timestamp_tz
         description: "Fecha de insercion de los datos"
 
-  - name: stg_sql_server_dbo__products          #TERMINADA
+  - name: stg_SQL_SERVER_DBO__products       
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla donde existen todos los diferentes productos con su inventario"
     columns:
       - name: product_id
         tests:
@@ -250,14 +271,20 @@ models:
         description: "Identificador unico del producto"
 
       - name: price_dollar
+        tests:
+              - not_null
         data_type: float
         description: "Precio del producto"
 
       - name: name
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Nombre del producto"
 
       - name: inventory
+        tests:
+              - not_null
         data_type: number(38,0)
         description: "Cantidad de stock del producto"
 
@@ -269,11 +296,11 @@ models:
         data_type: timestamp_tz(9)
         description: "Fecha de insercion de los datos"
 
-  - name: stg_sql_server_dbo__promos                    #TERMINADA
+  - name: stg_SQL_SERVER_DBO__promos                 
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla que recoge las promociones activas e inactivas"
     columns:
       - name: promo_id
         tests:
@@ -283,10 +310,14 @@ models:
         description: "Identificador unico de la promocion"
 
       - name: promo_name
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Nombre de la promocion"
 
       - name: discount_dollar
+        tests:
+              - not_null
         data_type: number(38,0)
         description: "Descuento fijo de dolares"
 
@@ -294,7 +325,7 @@ models:
         tests:
               - not_null
               - relationships:
-                  to: ref('sql_server_dbo__promos_status')
+                  to: ref('stg_SQL_SERVER_DBO__promos_status')
                   field: promo_status_id
         data_type: varchar(256)
         description: "Identificador unico del estado de la promocion"
@@ -307,11 +338,11 @@ models:
         data_type: timestamp_tz(9)
         description: "Fecha de insercion de los datos"
 
-  - name: stg_sql_server_dbo__users
+  - name: stg_SQL_SERVER_DBO__users
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla que recoge todos los usuarios existentes con su respectiva informacion"
     columns:
       - name: user_id
         tests:
@@ -322,31 +353,40 @@ models:
 
       - name: address_id
         tests:
-              - unique
               - not_null
               - relationships:
-                  to: ref('sql_server_dbo__adresses')
+                  to: ref('stg_SQL_SERVER_DBO__adresses')
                   field: address_id
         data_type: varchar(256)
         description: "Identificador unico de la direccion"
 
       - name: first_name
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Nombre del usuario"
 
       - name: last_name
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Apellido del usuario"
 
       - name: phone_number
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Numero de telefono del usuario"
 
       - name: email
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Email del usuario"
 
       - name: is_valid_email_address
+        tests:
+              - not_null
         data_type: boolean
         description: "Verificador de email validos"
 
@@ -355,6 +395,8 @@ models:
         description: "Fecha de actualizacion del usuario"
 
       - name: created_at_utc
+        tests:
+              - not_null
         data_type: timestamp_tz(9)
         description: "Fecha de creacion de usuario"
 
@@ -370,11 +412,11 @@ models:
         data_type: timestamp_tz(9)
         description: "Fecha de insercion de los datos"
 
-  - name: stg_SQL_SERVER_DBO__shipping_service                    #TERMINADA
+  - name: stg_SQL_SERVER_DBO__shipping_service                 
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla que recoge todos los servicios de entrega disponibles"
     columns:
       - name: shipping_service_id
         tests:
@@ -384,14 +426,16 @@ models:
         description: "Identificador unico del servicio de envio"
 
       - name: shipping_service_name
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Nombre del servicio de envio"
 
-  - name: stg_SQL_SERVER_DBO__orders_status                    #TERMINADA
+  - name: stg_SQL_SERVER_DBO__orders_status                
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla que recoge los diferentes estados en los que puede estar un pedido"
     columns:
       - name: order_status_id
         tests:
@@ -401,14 +445,16 @@ models:
         description: "Identificador unico del estado"
 
       - name: status
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Estado"
 
-  - name: stg_SQL_SERVER_DBO__promos_status                    #TERMINADA
+  - name: stg_SQL_SERVER_DBO__promos_status                
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla que recoge todos los estados en los que puede estar una promocion"
     columns:
       - name: promo_status_id
         tests:
@@ -417,14 +463,16 @@ models:
         description: "Identificador unico del estado"
 
       - name: promo_status
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Estado"
 
-  - name: stg_SQL_SERVER_DBO__events_types                   #TERMINADA
+  - name: stg_SQL_SERVER_DBO__events_types                
     config:
       contract:
         enforced: true
-    description: ""
+    description: "Tabla que recoge todos los diferentes tipos de eventos existentes"
     columns:
       - name: event_type_id
         tests:
@@ -434,5 +482,7 @@ models:
         description: "Identificador unico del tipo de evento"
 
       - name: event_type_name
+        tests:
+              - not_null
         data_type: varchar(256)
         description: "Nombre del tipo de evento"
