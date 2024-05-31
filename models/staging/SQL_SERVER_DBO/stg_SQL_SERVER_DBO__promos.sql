@@ -19,8 +19,8 @@ renamed as (
         promo_id as promo_name,
         discount as discount_dollar,
         IFF(status = 'active', '1', '0')::number(2,0) as promo_status_id,
-        _fivetran_deleted as _fivetran_deleted_utc,
-        _fivetran_synced as _fivetran_synced_utc
+        _fivetran_deleted,
+        {{ to_utc('_fivetran_synced') }} as _fivetran_synced_utc
 
     from source
     union all

@@ -37,7 +37,7 @@ models:
         data_type: varchar(256)
         description: "Estado donde se ubica la direccion"
 
-      - name: _fivetran_deleted_utc
+      - name: _fivetran_deleted
         data_type: boolean
         description: "Indicador de borrado de los datos"
 
@@ -100,7 +100,7 @@ models:
       - name: created_at_utc
         tests:
               - not_null
-        data_type: timestamp_ntz(9)
+        data_type: TIMESTAMP_TZ
         description: "Fecha cuando se ha creado el evento"
 
       - name: order_id
@@ -112,7 +112,7 @@ models:
         data_type: varchar(1024)
         description: "Identificador unico de order"
 
-      - name: _fivetran_deleted_utc
+      - name: _fivetran_deleted
         data_type: boolean
         description: "Indicador de borrado de los datos"
 
@@ -150,7 +150,7 @@ models:
         data_type: number
         description: "Cantidad de productos pedidos en cada order"
 
-      - name: _fivetran_deleted_utc
+      - name: _fivetran_deleted
         data_type: boolean
         description: "Indicador de borrado de los datos"
 
@@ -249,7 +249,7 @@ models:
         data_type: varchar
         description: "Identificador unico del estado del pedido"
 
-      - name: _fivetran_deleted_utc
+      - name: _fivetran_deleted
         data_type: boolean
         description: "Indicador de borrado de los datos"
 
@@ -288,7 +288,7 @@ models:
         data_type: number(38,0)
         description: "Cantidad de stock del producto"
 
-      - name: _fivetran_deleted_utc
+      - name: _fivetran_deleted
         data_type: boolean
         description: "Indicador de borrado de datos"
 
@@ -330,7 +330,7 @@ models:
         data_type: number
         description: "Identificador unico del estado de la promocion"
 
-      - name: _fivetran_deleted_utc
+      - name: _fivetran_deleted
         data_type: boolean
         description: "Indicador de borrado de datos"
 
@@ -400,7 +400,7 @@ models:
         data_type: number(38,0)
         description: "Numero total de orders"
 
-      - name: _fivetran_deleted_utc
+      - name: _fivetran_deleted
         data_type: boolean
         description: "Indicador de borrado de datos"
 

@@ -18,8 +18,8 @@ renamed as (
         order_id,
         product_id,
         quantity as quantity_of_products,
-        _fivetran_deleted as _fivetran_deleted_utc,
-        _fivetran_synced as _fivetran_synced_utc
+        _fivetran_deleted,
+        {{ to_utc('_fivetran_synced') }} as _fivetran_synced_utc
 
     from source
 

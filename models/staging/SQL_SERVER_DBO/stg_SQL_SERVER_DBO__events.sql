@@ -21,10 +21,10 @@ renamed as (
         IFF(user_id = '', md5('sin_user'), user_id) as user_id,
         IFF(product_id = '', md5('sin_producto'), product_id) as product_id,
         IFF(session_id = '', md5('sin_sesion'), session_id) as session_id,
-        created_at as created_at_utc,
+        {{ to_utc('created_at') }} as created_at_utc,
         IFF(order_id = '', md5('sin_order'), order_id) as order_id,
-        _fivetran_deleted as _fivetran_deleted_utc,
-        _fivetran_synced as _fivetran_synced_utc
+        _fivetran_deleted,
+        {{ to_utc('_fivetran_synced') }} as _fivetran_synced_utc
 
     from source
     union all

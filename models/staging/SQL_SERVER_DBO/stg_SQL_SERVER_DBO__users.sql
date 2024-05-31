@@ -22,11 +22,11 @@ renamed as (
         phone_number,
         email,
         coalesce (regexp_like(email, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')= true,false) as is_valid_email_address,
-        updated_at as updated_at_utc,
-        created_at as created_at_utc,
+        {{ to_utc('updated_at') }} as updated_at_utc,
+        {{ to_utc('created_at') }} as created_at_utc,
         total_orders,
-        _fivetran_deleted as _fivetran_deleted_utc,
-        _fivetran_synced as _fivetran_synced_utc
+        _fivetran_deleted,
+        {{ to_utc('_fivetran_synced') }} as _fivetran_synced_utc
 
     from source
     union all
