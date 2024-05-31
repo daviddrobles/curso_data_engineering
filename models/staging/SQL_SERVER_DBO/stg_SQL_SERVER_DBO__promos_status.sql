@@ -15,7 +15,7 @@ source as (
 renamed as (
 
     select
-        IFF(status = 'active', 1, 0)::varchar(256) as promo_status_id,
+        IFF(status = 'active', 1, 0)::number(2,0) as promo_status_id,
         status as promo_status
 
     from source

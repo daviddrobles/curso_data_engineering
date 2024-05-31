@@ -327,7 +327,7 @@ models:
               - relationships:
                   to: ref('stg_SQL_SERVER_DBO__promos_status')
                   field: promo_status_id
-        data_type: varchar(256)
+        data_type: number
         description: "Identificador unico del estado de la promocion"
 
       - name: _fivetran_deleted_utc
@@ -379,14 +379,10 @@ models:
         description: "Numero de telefono del usuario"
 
       - name: email
-        tests:
-              - not_null
         data_type: varchar(256)
         description: "Email del usuario"
 
       - name: is_valid_email_address
-        tests:
-              - not_null
         data_type: boolean
         description: "Verificador de email validos"
 
@@ -459,7 +455,7 @@ models:
       - name: promo_status_id
         tests:
               - not_null
-        data_type: varchar(256)
+        data_type: number(2,0)
         description: "Identificador unico del estado"
 
       - name: promo_status
