@@ -25,9 +25,9 @@ renamed as (
     from source
     union all
     select
-        md5('producto_vacio'),
+        md5('sin_producto'),
         0,
-        'producto_vacio',
+        'No existente',
         0,
         null,
         null

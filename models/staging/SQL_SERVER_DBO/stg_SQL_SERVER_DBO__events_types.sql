@@ -16,10 +16,13 @@ renamed as (
 
     select
         distinct md5(event_type) as event_type_id,
-        IFF(event_type = '', 'sin_event_type', event_type) as event_type_name
+        event_type as event_type_name
 
     from source
-
+    union all
+    select
+        md5('sin_event_type'),
+        'Sin evento'
 )
 
 select * from renamed

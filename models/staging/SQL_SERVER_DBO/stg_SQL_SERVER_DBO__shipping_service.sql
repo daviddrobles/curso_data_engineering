@@ -13,12 +13,12 @@ source as (
 ),
 
 renamed as (
-
-    select
-        distinct md5(shipping_service) as shipping_service_id,
-        IFF(shipping_service = '', 'Sin_shipping_service', shipping_service) as shipping_service_name
-
-    from source
+    SELECT md5(x) AS shipping_service_id, 
+    x as shipping_service_name 
+    FROM (
+        select
+            DISTINCT CASE WHEN shipping_service = '' THEN 'sin_shipping_service' ELSE shipping_service END as x
+            from source)
 
 )
 

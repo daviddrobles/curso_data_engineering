@@ -29,7 +29,21 @@ renamed as (
         _fivetran_synced as _fivetran_synced_utc
 
     from source
-
+    union all
+    select
+        md5('sin_user'),
+        md5('sin_address'),
+        'No existe',
+        'No existe',
+        '0',
+        'No_existe',
+        coalesce (regexp_like('No_existe', '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$')= true,false) as is_valid_email_address,
+        NULL,
+        '2024-05-31',
+        0,
+        null,
+        null
+  
 )
 
 select * from renamed
