@@ -10,3 +10,9 @@ packages:
 
   - package: elementary-data/elementary #https://hub.getdbt.com/elementary-data/elementary/latest/
     version: 0.15.2
+
+  - package: dbt-labs/dbt_project_evaluator #https://hub.getdbt.com/dbt-labs/dbt_project_evaluator/latest/
+    version: 0.11.0
+
+  - package: calogica/dbt_expectations #https://hub.getdbt.com/calogica/dbt_expectations/latest/
+    version: 0.10.3

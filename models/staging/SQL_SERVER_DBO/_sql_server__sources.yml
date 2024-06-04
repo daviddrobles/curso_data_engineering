@@ -25,6 +25,8 @@ sources:
               - unique
               - not_null
           - name: zipcode
+            tests:
+              - not_null
           - name: country
           - name: address
           - name: state
@@ -39,7 +41,13 @@ sources:
               - unique
               - not_null
           - name: page_url
+            tests:
+              - not_null
           - name: event_type
+            tests:
+              - not_null
+            tests:
+              - not_null
           - name: user_id
             tests:
               - not_null
@@ -59,7 +67,7 @@ sources:
             tests:
               - unique
               - not_null
-          - name: shipping_service_id
+          - name: shipping_service
           - name: shipping_cost
           - name: address_id
             tests:

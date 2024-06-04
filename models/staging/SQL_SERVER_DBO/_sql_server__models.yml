@@ -482,3 +482,194 @@ models:
               - not_null
         data_type: varchar(256)
         description: "Nombre del tipo de evento"
+
+#----------------------------------- DOCUMENTACION DE LAS BASES ----------------------------------------------------# 
+
+  - name: base_SQL_SERVER_DBO__promos                 
+    config:
+      contract:
+        enforced: true
+    description: "Tabla base que recoge las promociones activas e inactivas"
+    columns:
+      - name: promo_id
+        tests:
+              - unique
+              - not_null
+        data_type: varchar(256)
+        description: "Identificador unico de la promocion"
+
+      - name: promo_name
+        tests:
+              - not_null
+        data_type: varchar(256)
+        description: "Nombre de la promocion"
+
+      - name: discount_dollar
+        tests:
+              - not_null
+        data_type: number(38,0)
+        description: "Descuento fijo de dolares"
+
+      - name: promo_status
+        tests:
+              - not_null
+        data_type: varchar(256)
+        description: "Estado de la promocion"
+
+      - name: _fivetran_deleted
+        data_type: boolean
+        description: "Indicador de borrado de datos"
+
+      - name: _fivetran_synced_utc
+        data_type: timestamp_tz(9)
+        description: "Fecha de insercion de los datos"
+
+  - name: base_SQL_SERVER_DBO__orders
+    config:
+      contract:
+        enforced: true
+    description: "Tabla base que recoge todos los pedidos realizados por cada usuario"
+    columns:
+      - name: order_id
+        tests:
+              - unique
+              - not_null
+        data_type: varchar
+        description: "Identificador unico de cada order"
+
+      - name: shipping_service
+        tests:
+              - not_null
+        data_type: varchar
+        description: "Identificador unico de cada shipping service"
+
+      - name: shipping_cost_dollar
+        tests:
+              - not_null
+        data_type: float
+        description: "Coste de envio"
+
+      - name: address_id
+        tests:
+              - not_null
+        data_type: varchar
+        description: "Identificador unico de cada direccion"
+
+      - name: created_at_utc
+        tests:
+              - not_null
+        data_type: timestamp_tz
+        description: "Fecha de creacion del pedido (order)"
+
+      - name: promo_id
+        tests:
+              - not_null
+        data_type: varchar
+        description: "Identificador unico de cada promocion"
+
+      - name: estimated_delivery_at_utc
+        data_type: timestamp_tz
+        description: "Fecha de entrega estimada"
+
+      - name: order_cost_dollar
+        tests:
+              - not_null
+        data_type: float
+        description: "Coste del pedido"
+
+      - name: user_id
+        tests:
+              - not_null
+        data_type: varchar
+        description: "Identificador unico de cada usuario"
+
+      - name: order_total_dollar
+        tests:
+              - not_null
+        data_type: float
+        description: "Coste final del pedido con su descuento"
+
+      - name: delivered_at_utc
+        data_type: timestamp_tz
+        description: "Fecha de entrega del pedido"
+
+      - name: tracking_id
+        data_type: varchar
+        description: "Identificador unico del rastreo del pedido"
+
+      - name: status
+        tests:
+              - not_null
+        data_type: varchar
+        description: "Estado del pedido"
+
+      - name: _fivetran_deleted
+        data_type: boolean
+        description: "Indicador de borrado de los datos"
+
+      - name: _fivetran_synced_utc
+        data_type: timestamp_tz
+        description: "Fecha de insercion de los datos"
+
+  - name: base_SQL_SERVER_DBO__events
+    config:
+      contract:
+        enforced: true
+    description: "Tabla base que refleja todos los eventos que realiza cada usuario y la sesion generada"
+    columns:
+      - name: event_id
+        tests:
+              - unique
+              - not_null
+        data_type: varchar(1024)
+        description: "Identificador unico de eventos"
+
+      - name: page_url
+        tests:
+              - not_null
+        data_type: varchar(1024)
+        description: "Direccion de la pagina"
+
+      - name: event_type
+        tests:
+              - not_null
+        data_type: varchar(100)
+        description: "Tipo de evento"
+
+      - name: user_id
+        tests:
+              - not_null
+        data_type: varchar(1024)
+        description: "Identificador unico de usuario"
+
+      - name: product_id
+        tests:
+              - not_null
+        data_type: varchar(1024)
+        description: "Identificado unico de producto"
+
+      - name: session_id
+        tests:
+              - not_null
+        data_type: varchar(1024)
+        description: "Identificador unico de la sesion"
+
+      - name: created_at_utc
+        tests:
+              - not_null
+        data_type: TIMESTAMP_TZ
+        description: "Fecha cuando se ha creado el evento"
+
+      - name: order_id
+        tests:
+              - not_null
+        data_type: varchar(1024)
+        description: "Identificador unico de order"
+
+      - name: _fivetran_deleted
+        data_type: boolean
+        description: "Indicador de borrado de los datos"
+
+      - name: _fivetran_synced_utc
+        data_type: timestamp_tz
+        description: "Fecha de insercion de los datos"

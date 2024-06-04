@@ -8,7 +8,7 @@ with
 
 source as (
 
-    select status from {{ source('SQL_SERVER_DBO', 'orders') }}
+    select status from {{ ref('base_SQL_SERVER_DBO__orders') }}
 
 ),
 
