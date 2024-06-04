@@ -8,7 +8,7 @@ with
 
 source as (
 
-    select shipping_service from {{ source('SQL_SERVER_DBO', 'orders') }}
+    select shipping_service from {{ ref('base_SQL_SERVER_DBO__orders') }}
 
 ),
 
