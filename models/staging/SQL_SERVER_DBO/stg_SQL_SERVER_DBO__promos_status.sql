@@ -8,7 +8,7 @@ with
 
 source as (
 
-    select status from {{ ref('base_SQL_SERVER_DBO__promos') }}
+    select * from {{ ref('base_SQL_SERVER_DBO__promos') }}
 
 ),
 
