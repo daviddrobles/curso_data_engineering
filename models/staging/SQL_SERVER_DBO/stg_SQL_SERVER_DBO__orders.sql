@@ -20,6 +20,7 @@ renamed as (
         shipping_cost_dollar,
         IFF(address_id = '', md5('sin_address'), address_id) as address_id,
         created_at_utc,
+        created_at_utc::DATE as created_at_month,
         IFF(promo_id = '', md5('sin_promo'), md5(promo_id) ) as promo_id,
         estimated_delivery_at_utc,
         order_cost_dollar,
@@ -27,7 +28,7 @@ renamed as (
         order_total_dollar,
         delivered_at_utc,
         tracking_id,
-        IFF(status = '', md5('sin_status'), md5(status) ) as order_status_id,
+        IFF(status = '', md5('sin_status'), md5(status)) as order_status_id,
         _fivetran_deleted,
         _fivetran_synced_utc
 
@@ -38,6 +39,7 @@ renamed as (
         md5('sin_shipping_service'),
         0,
         md5('sin_address'),
+        '2024-05-31',
         '2024-05-31',
         md5('sin_promo'),
         null,

@@ -201,6 +201,12 @@ models:
         data_type: timestamp_tz
         description: "Fecha de creacion del pedido (order)"
 
+      - name: created_at_month
+        tests:
+              - not_null
+        data_type: date
+        description: "Fecha de creacion del pedido (order)"
+
       - name: promo_id
         tests:
               - not_null
