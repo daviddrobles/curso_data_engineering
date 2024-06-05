@@ -18,24 +18,6 @@ source_orders as (
 
 ),
 
-source_products as (
-
-    select * from {{ ref('dim_products') }}
-
-),
-
-source_promos as (
-
-    select * from {{ ref('dim_promos') }}
-
-),
-
-source_promos_status as (
-
-    select * from {{ ref('dim_promos_status') }}
-
-),
-
 fact_pedidos as (
 
     SELECT
@@ -56,13 +38,9 @@ fact_pedidos as (
         o.order_total_dollar,
         o.estimated_delivery_at_utc,
         o.delivered_at_utc
-    FROM source_order_items I
-    JOIN stg_SQL_SERVER_DBO__orders O
-    ON I.order_id = O.order_id
-    JOIN source_products P
-    ON I.product_id = P.product_id
-    JOIN source_promos PR
-    ON O.promo_id = PR.promo_id
+    FROM source_orders O
+    JOIN source_order_items I
+    ON O.order_id = I.order_id
 
 )
 

@@ -4,7 +4,7 @@ sources:
 
   - name: SQL_SERVER_DBO # name of the source 
     schema: SQL_SERVER_DBO # this is the schema our raw data lives in
-    database: ALUMNO7DEVBRONZEDB # this is the name of our database
+    database: ALUMNO7_DEV_BRONZE_DB # this is the name of our database
 
     quoting:
       database: false
@@ -44,8 +44,6 @@ sources:
             tests:
               - not_null
           - name: event_type
-            tests:
-              - not_null
             tests:
               - not_null
           - name: user_id
