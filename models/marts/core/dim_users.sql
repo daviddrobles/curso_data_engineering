@@ -24,7 +24,7 @@ renamed as (
         is_valid_email_address,
         updated_at_utc,
         created_at_utc,
-        total_orders,
+        --total_orders,
         _fivetran_deleted,
         _fivetran_synced_utc
 
