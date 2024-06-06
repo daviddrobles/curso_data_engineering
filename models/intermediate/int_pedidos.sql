@@ -1,9 +1,3 @@
-{{
-  config(
-    materialized='table'
-  )
-}}
-
 with 
 
 source_order_items as (
@@ -30,14 +24,14 @@ source_promos as (
 
 ),
 
-precio_producto as (
+informacion as (
 
     SELECT
-        row_number() over(PARTITION BY i.order_id ORDER BY i.order_id) as ROW_,
         i.order_id, 
         o.order_status_id, 
         o.user_id, 
-        o.shipping_service_id, 
+        o.shipping_service_id,
+        shipping_cost_dollar, 
         o.address_id,  
         o.tracking_id,
         o.promo_id,
@@ -45,8 +39,6 @@ precio_producto as (
         i.product_id,
         P.price_dollar,
         i.quantity_of_products,
-        o.shipping_cost_dollar,
-        (i.quantity_of_products*p.price_dollar) as cost_per_product,
         o.created_at_utc,
         o.created_at_month,
         o.estimated_delivery_at_utc,
@@ -58,86 +50,58 @@ precio_producto as (
     ON I.product_id = P.product_id
     JOIN source_promos PR
     ON O.promo_id = PR.promo_id
+    ORDER BY i.order_id
 
 ),
 
-precio_acumulado AS (
-
-    SELECT
-        ROW_,
-        order_id, 
-        order_status_id, 
-        user_id, 
-        shipping_service_id, 
-        address_id,  
-        tracking_id,
-        promo_id,
-        discount_dollar,
-        product_id,
-        price_dollar,
-        quantity_of_products,
-        shipping_cost_dollar,
-        cost_per_product,
-        sum(cost_per_product) OVER (PARTITION BY order_id ORDER BY row_ ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as precio_acumulado,
-        created_at_utc,
-        created_at_month,
-        estimated_delivery_at_utc,
-        delivered_at_utc
-    
-    FROM precio_producto
-
-),
-
-precio_final_calculado AS (
+primeros_calculos AS (
 
     SELECT 
-        ROW_,
-        order_id, 
-        order_status_id, 
-        user_id, 
-        shipping_service_id, 
-        address_id,  
+        order_id,
+        order_status_id,
+        user_id,
+        shipping_service_id,
+        shipping_cost_dollar,
+        address_id,
         tracking_id,
         promo_id,
         discount_dollar,
         product_id,
         price_dollar,
         quantity_of_products,
-        shipping_cost_dollar,
-        cost_per_product,
-        precio_acumulado, 
-        (precio_acumulado + IFF(ROW_ = '1', shipping_cost_dollar, 0)) - IFF(ROW_ = '1', discount_dollar, 0) as precio_final,
+        (price_dollar*quantity_of_products) as coste_por_producto,
         created_at_utc,
         created_at_month,
         estimated_delivery_at_utc,
         delivered_at_utc
-    FROM precio_acumulado
+    FROM informacion
+
 ),
 
-precio_final AS (
+segundos_calculos AS (
 
     SELECT
-        ROW_,
-        order_id, 
-        order_status_id, 
-        user_id, 
-        shipping_service_id, 
-        address_id,  
+        ROW_NUMBER() OVER (PARTITION BY order_id ORDER BY order_id) as ROW_,
+        order_id,
+        order_status_id,
+        user_id,
+        shipping_service_id,
+        shipping_cost_dollar,
+        address_id,
         tracking_id,
         promo_id,
         discount_dollar,
         product_id,
         price_dollar,
         quantity_of_products,
-        shipping_cost_dollar,
-        cost_per_product,
-        precio_acumulado, 
-        sum(precio_final) OVER (PARTITION BY order_id ORDER BY row_ ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as precio_final,
+        coste_por_producto,
+        sum(coste_por_producto) OVER (PARTITION BY order_id ORDER BY order_id) as precio_total,
+        (precio_total - IFF(ROW_ = '1', discount_dollar, 0) + IFF(ROW_ = '1', shipping_cost_dollar, 0)) AS precio_final,
         created_at_utc,
         created_at_month,
         estimated_delivery_at_utc,
         delivered_at_utc
-    FROM precio_final_calculado
+    FROM primeros_calculos
 )
 
-select * from precio_final
+select * from segundos_calculos
